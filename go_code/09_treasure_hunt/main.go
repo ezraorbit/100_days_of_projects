@@ -33,6 +33,8 @@ func treaureHunt(gameOn *bool, secretRow, secretCol int64) {
 	fmt.Println("Where is the treasure👀\nPlease enter your guess between 0 - 2, e.g '0, 1'")
 	row, col := mapInput()
 
+	fmt.Println(row, col)
+
 	if row == secretRow && col == secretCol {
 		fmt.Println("You win. WOW WOW🥳")
 		gameMap[secretRow][secretCol] = "✅"
@@ -52,6 +54,7 @@ func mapInput() (int64, int64) {
 	reader := bufio.NewReader(os.Stdin)
 	str, _ := reader.ReadString('\n')
 	str = strings.TrimSpace(str)
+
 	strSlice := strings.Split(str, ", ")
 	for index, value := range strSlice {
 		if index == 0 {
@@ -59,6 +62,11 @@ func mapInput() (int64, int64) {
 		} else if index == 1 {
 			input2, _ = strconv.ParseInt(value, 10, 64)
 		}
+	}
+
+	if input1 > 2 || input2 > 2 {
+		fmt.Println("Please input a value between 0 and 2🤲")
+		return mapInput()
 	}
 
 	return input1, input2
